@@ -10,9 +10,7 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.server.VaadinServletRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 import javax.annotation.security.PermitAll;
 
@@ -30,12 +28,13 @@ public class VaadinHelloView extends VerticalLayout {
         if (isAuthenticated) {
             add(new Hr());
             add(new Button("Logout", click -> {
-                UI.getCurrent().getPage().setLocation("/");
-                new SecurityContextLogoutHandler().logout(VaadinServletRequest.getCurrent().getHttpServletRequest(), null, null);
-                new SecurityContextLogoutHandler().setClearAuthentication(true);
-                new SecurityContextLogoutHandler().setInvalidateHttpSession(true);
+                // Logs me out. Not getting the login flow again. It silently logs me in after logout.
+                // Not redirecting to spring.cloud.azure.active-directory.b2c.logout-success-url anyway
+                // new SecurityContextLogoutHandler().logout(VaadinServletRequest.getCurrent().getHttpServletRequest(), null, null);
+                // Just do this:
+                UI.getCurrent().getPage().setLocation("/logout");
             }));
-            add("Logs me out. Not getting the login flow again. It silently logs me in after logout");
+            add("UI.getCurrent().getPage().setLocation(\"/logout\")");
             add(new Hr());
             add(SecurityUtils.setRouterIgnoreAttribute(new Anchor("/logout", "/logout")));
             add("Logs me out. Not getting the logout page from Azure Flow");
