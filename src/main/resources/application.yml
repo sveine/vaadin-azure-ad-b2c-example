@@ -20,8 +20,8 @@ spring:
                     credential:
                         client-id: ${AZURE_CLIENT_ID}
                         client-secret: ${AZURE_CLIENT_SECRET}
-                    login-flow: ${LOGIN_USER_FLOW_KEY}               # default to sign-up-or-sign-in, will look up the user-flows map with provided key.
-                    logout-success-url: ${LOGOUT_SUCCESS_URL}
+                    login-flow: sign-up-or-sign-in               # default to sign-up-or-sign-in, will look up the user-flows map with provided key.
+                    logout-success-url: http://localhost:${server.port}/loggedout
                     user-flows:
                         password-reset: ${PASSWORD_RESET_USER_FLOW_NAME}
                         profile-edit: ${PROFILE_EDIT_FLOW_NAME}
