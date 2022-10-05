@@ -8,6 +8,7 @@ import com.vaadin.flow.spring.security.VaadinWebSecurity;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 public class SecurityConfig extends VaadinWebSecurity {
@@ -25,5 +26,6 @@ public class SecurityConfig extends VaadinWebSecurity {
         super.configure(http);
         http.apply(configurer);
         setOAuth2LoginPage(http, signUpOrSignInFlowName);
+        http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
     }
 }
